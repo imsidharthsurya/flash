@@ -1,9 +1,16 @@
 import Header from "./Header";
 import { useState,useRef } from "react";
 import { validateData } from "../utils/validate";
+import {createUserWithEmailAndPassword,signInWithEmailAndPassword,updateProfile} from "firebase/auth"
+import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {addUser} from "../utils/userSlice"
 
 const Login=()=>{
 
+    const dispatch=useDispatch();
+    const navigate=useNavigate();
     const email=useRef(null);
     const password=useRef(null);
     const name=useRef(null);
@@ -17,9 +24,58 @@ const Login=()=>{
                 setFormError("Please Enter Name");
         }else{
             // console.log("login is clicked");
-            setFormError(validateData(email.current.value,password.current.value));
-            if(formError==null) //when valide email, name and password now we can go with login and signup
-                alert("success");
+            const validateError=validateData(email.current.value,password.current.value);
+            if(validateError==null){
+                setFormError(null);
+                //when valide email, name and password now we can go with login and signup
+                if(!loginStatus){
+                    //signup case
+                    
+                    createUserWithEmailAndPassword(auth,email.current.value,password.current.value)
+                    .then((userCredential) => {
+                        // Signed up 
+                        const user = userCredential.user;
+                        updateProfile(auth.currentUser, {
+                            displayName: name.current.value,photoURL: "https://avatars.githubusercontent.com/u/60471523?v=4"
+                          }).then(() => {
+                            // Profile updated!
+                            // console.log("signup success user is ",user);
+                            navigate("/browse");
+                            const {uid,email,displayName,photoURL} = auth.currentUser;
+                            dispatch(addUser({uid:uid,email:email,displayName:displayName,photoURL:photoURL}));
+                            // console.log("Profile display name updated")
+                          }).catch((error) => {
+                            // An error occurred
+                            setFormError(error);
+                          });
+                        
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        setFormError(errorCode+" "+errorMessage)
+                        // console.log("error is: ",errorCode,errorMessage);
+                    });
+                }else{
+                    //login case
+                    signInWithEmailAndPassword(auth, email.current.value,password.current.value)
+                    .then((userCredential) => {
+                        // Signed in 
+                        const user = userCredential.user;
+                        console.log("sign in success: ",user);
+                        navigate("/browse");
+                        // ...
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        setFormError(errorCode+" "+errorMessage);
+                    });
+                }
+                
+            } else{//not valid mail or password
+                setFormError(validateError);
+            }
         }
         console.log(formError)
     }
