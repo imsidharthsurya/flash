@@ -3,14 +3,13 @@ import { useState,useRef } from "react";
 import { validateData } from "../utils/validate";
 import {createUserWithEmailAndPassword,signInWithEmailAndPassword,updateProfile} from "firebase/auth"
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {addUser} from "../utils/userSlice"
+import { BG_IMAGE, USER_AVATAR } from "../utils/constants";
 
 const Login=()=>{
 
     const dispatch=useDispatch();
-    const navigate=useNavigate();
     const email=useRef(null);
     const password=useRef(null);
     const name=useRef(null);
@@ -36,11 +35,10 @@ const Login=()=>{
                         // Signed up 
                         const user = userCredential.user;
                         updateProfile(auth.currentUser, {
-                            displayName: name.current.value,photoURL: "https://avatars.githubusercontent.com/u/60471523?v=4"
+                            displayName: name.current.value,photoURL: USER_AVATAR
                           }).then(() => {
                             // Profile updated!
                             // console.log("signup success user is ",user);
-                            navigate("/browse");
                             const {uid,email,displayName,photoURL} = auth.currentUser;
                             dispatch(addUser({uid:uid,email:email,displayName:displayName,photoURL:photoURL}));
                             // console.log("Profile display name updated")
@@ -63,7 +61,6 @@ const Login=()=>{
                         // Signed in 
                         const user = userCredential.user;
                         console.log("sign in success: ",user);
-                        navigate("/browse");
                         // ...
                     })
                     .catch((error) => {
@@ -82,7 +79,7 @@ const Login=()=>{
     return (
         <div>
             <Header/>
-            <img className="absolute z-10" src="https://assets.nflxext.com/ffe/siteui/vlv3/ff5587c5-1052-47cf-974b-a97e3b4f0656/065df910-dec3-46ae-afa8-7ad2b52dce40/IN-en-20240506-popsignuptwoweeks-perspective_alpha_website_large.jpg" alt="bg-image"/>
+            <img className="absolute z-10" src={BG_IMAGE} alt="bg-image"/>
             
                 <form onSubmit={(e)=>e.preventDefault()} className="h-[75%] bg-opacity-80 w-4/12 absolute inline-block px-10 py-4 text-white bg-black z-40 my-[7%] mx-auto top-0 left-0 bottom-0 right-0">
                     <h1 className="text-3xl font-bold py-8">{loginStatus?"Sign In":"Sign Up"}</h1>
