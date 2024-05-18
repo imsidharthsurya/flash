@@ -6,5 +6,17 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    function({ addBase, addComponents, addUtilities, e, theme, variants }) {
+      addUtilities({
+        '.no-scrollbar': {
+          '-ms-overflow-style': 'none',  // IE and Edge
+          'scrollbar-width': 'none',     // Firefox
+        },
+        '.no-scrollbar::-webkit-scrollbar': {
+          'display': 'none',             // Chrome, Safari and Opera
+        },
+      })
+    }
+  ],
 }
