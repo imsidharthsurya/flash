@@ -5,10 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import { addUser,removeUser } from "../utils/userSlice";
 import {NETFLIX_LOGO} from "../utils/constants"
+import { toggleSearch } from '../utils/gptSlice';
 const Header = () => {
   const dispatch=useDispatch();
   const navigate=useNavigate();
   const user=useSelector((store)=>store.user);
+  const searchgpt=useSelector((store)=>store.gpt.showSearch)
   const handleSignout=()=>{
     signOut(auth).then(() => {
       console.log("signout successfull");
@@ -16,6 +18,11 @@ const Header = () => {
       // An error happened.
       navigate("/error")
     });
+  }
+
+  //handle search toggle search and mainContainer
+  const handleSearch=()=>{
+    dispatch(toggleSearch());
   }
 
   useEffect(()=>{
@@ -43,6 +50,7 @@ const Header = () => {
         <img className='w-48 ml-10' src={NETFLIX_LOGO} alt='netflix-logo'/>
     
         {user!=null && <div className='flex mr-10 items-center'>
+          <button onClick={handleSearch} className='bg-red-600 text-white px-4 py-2 rounded-md mr-4'>{searchgpt?"Home":"Search"}</button>
             <img src={user.photoURL} className='w-10 h-10' alt='user image'/>
             <button className='font-bold text-white' onClick={handleSignout}>Sign Out</button>
 
