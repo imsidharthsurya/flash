@@ -81,7 +81,7 @@ const Login=()=>{
             <Header/>
             <img className="h-screen w-full object-cover absolute z-10" src={BG_IMAGE} alt="bg-image"/>
             
-                <form onSubmit={(e)=>e.preventDefault()} className="h-[75%] bg-opacity-80 md:w-4/12 absolute inline-block px-10 py-4 text-white bg-black z-40 my-[20%] md:my-[7%] mx-auto top-0 left-0 bottom-0 right-0">
+                <form onSubmit={(e)=>e.preventDefault()} className="h-[75%] bg-opacity-80 md:w-4/12 absolute inline-block px-10 py-4 text-white bg-black z-40 my-[30%] md:my-[7%] mx-auto top-0 left-0 bottom-0 right-0">
                     <h1 className="text-3xl font-bold py-8">{loginStatus?"Sign In":"Sign Up"}</h1>
                     {!loginStatus && <input ref={name} className="bg-opacity-40 text-white w-full rounded-lg my-2 border border-gray-500 p-3 bg-black" type="text" placeholder="Your Name"/>}
                     <input ref={email} className="bg-opacity-40 text-white w-full rounded-lg my-2 border border-gray-500 p-3 bg-black" type="text" placeholder="Email"/>

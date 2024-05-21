@@ -37,11 +37,11 @@ const GptSearchBar = () => {
   return (
     <div>
         <img className="w-full h-screen object-cover fixed -z-10" src={BG_IMAGE} alt="bg-image"/>
-    <div className='pt-[35%] md:pt-[12%] flex justify-center'>
+    <div className='pt-[45%] md:pt-[12%] flex justify-center'>
         
         <form className='w-full bg-black md:w-1/2 grid grid-cols-12' onSubmit={(e)=>e.preventDefault()}>
             <input ref={searchText} className='col-span-9 py-2 px-4 m-4' type='text' placeholder={lang[langValue].searchPlaceholder}/>
-            <button onClick={handleGptSearch} className='col-span-3 py-2 px-4 m-4 bg-red-600 text-white rounded-md'>{lang[langValue].search}</button>
+            <button onClick={handleGptSearch} className='col-span-3 py-2 px-3 md:px-4 my-4 md:m-4 bg-red-600 text-white rounded-md'>{lang[langValue].search}</button>
         </form>
     </div>
     </div>
