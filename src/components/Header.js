@@ -53,17 +53,17 @@ const Header = () => {
 
 
   return (
-    <div className='flex justify-between w-screen z-50 py-3 absolute bg-gradient-to-b from-black'>
-        <img className='w-48 ml-10' src={NETFLIX_LOGO} alt='netflix-logo'/>
+    <div className='flex flex-col md:flex-row items-center md:justify-between w-screen z-50 py-3 absolute bg-gradient-to-b from-black'>
+        <img className='w-48 md:ml-10' src={NETFLIX_LOGO} alt='netflix-logo'/>
     
-        {user!=null && <div className='flex mr-10 items-center'>
-          {searchgpt && <select onChange={selectLanguage} className='p-2 bg-red-600 text-white mr-4'>
+        {user!=null && <div className='flex mr-2 ml-2 mt-2 md:mt-0 md:ml-0 md:mr-10 justify-between'>
+          {searchgpt && <select onChange={selectLanguage} className='p-2 bg-red-600 text-white mr-4 rounded-md'>
             {LANG_DATA.map((lang)=>{
               return <option value={lang.value}>{lang.name}</option>
             })}
           </select>}
           <button onClick={handleSearch} className='bg-red-600 text-white px-4 py-2 rounded-md mr-4'>{searchgpt?"Home":"Search"}</button>
-            <img src={user.photoURL} className='w-10 h-10' alt='user image'/>
+            <img src={user.photoURL} className='hidden md:inline-block w-10 h-10' alt='user image'/>
             <button className='font-bold text-white' onClick={handleSignout}>Sign Out</button>
 
           </div>
