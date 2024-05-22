@@ -36,7 +36,7 @@ const GptSearchBar = () => {
   }
   return (
     <div>
-        <img className="w-full h-screen object-cover fixed -z-10" src={BG_IMAGE} alt="bg-image"/>
+        <img className="w-full h-screen object-cover fixed -z-10" src={BG_IMAGE} alt="bg"/>
     <div className='pt-[45%] md:pt-[12%] flex justify-center'>
         
         <form className='w-full bg-black md:w-1/2 grid grid-cols-12' onSubmit={(e)=>e.preventDefault()}>
