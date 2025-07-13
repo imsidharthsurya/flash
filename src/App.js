@@ -1,27 +1,29 @@
-import {createBrowserRouter,RouterProvider} from "react-router-dom"
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { lazy, Suspense } from "react";
 import Login from "./components/Login";
-import Browse from "./components/Browse";
+const Browse = lazy(() => import("./components/Browse"));
+// import Browse from "./components/Browse";
 
 function App() {
-
-
-  const appRouter=createBrowserRouter([
+  const appRouter = createBrowserRouter([
     {
-      path:"/",
-      element:<Login/>
+      path: "/",
+      element: <Login />,
     },
     {
-      path:"/browse",
-      element:<Browse/>
-    }
-  ])
+      path: "/browse",
+      element: (
+        <Suspense fallback={<h1>Loading...</h1>}>
+          <Browse />
+        </Suspense>
+      ),
+    },
+  ]);
 
-
-    
   return (
-      <div className="App">
-        <RouterProvider router={appRouter}/>
-      </div>
+    <div className="App">
+      <RouterProvider router={appRouter} />
+    </div>
   );
 }
 
